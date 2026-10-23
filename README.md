@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # NEXUS — Personal Productivity + Life OS
 
 NEXUS is a personal productivity workspace built with React, TypeScript, Vite, Express, MongoDB and JWT authentication.
@@ -104,3 +105,7 @@ nexus-project/
 ```
 
 This is a local-development release. Before public production deployment, add deployment-specific CORS/origin settings, rate limiting, security review, automated tests, and a production-grade authentication/session strategy.
+=======
+# NEXUS
+NEXUS — Personal Productivity and Life OS
+>>>>>>> 64e85f2fdaa9b8d784f9ae47cedd3e8ac524b329
