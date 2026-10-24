@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import helmet from 'helmet';
-import rateLimit from 'express-rate-limit';
+import helmet from "helmet";
+import { rateLimit } from "express-rate-limit";
 import mongoose from 'mongoose';
 import { config } from './config.js';
 import { authRouter } from './routes/auth.js';
