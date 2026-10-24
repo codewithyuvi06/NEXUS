@@ -30,7 +30,10 @@ app.use(async (_req, res, next) => {
     await connectDB();
     next();
   } catch (error) {
-    console.error('MongoDB connection failed:', error);
+    console.error(
+  'MongoDB connection failed:',
+  error instanceof Error ? `${error.name}: ${error.message}` : String(error)
+);
     res.status(503).json({ error: 'Database unavailable' });
   }
 });
