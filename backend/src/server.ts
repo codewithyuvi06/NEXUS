@@ -1,3 +1,4 @@
+import { connectDB } from './db.js';
 import express from 'express';
 import cors from 'cors';
 import helmet from "helmet";
@@ -15,7 +16,25 @@ app.use(helmet());
 app.use(cors({ origin: config.clientOrigin, credentials: true }));
 app.use(express.json({ limit: '1mb' }));
 app.use('/api/auth', rateLimit({ windowMs: 15 * 60 * 1000, limit: 30, standardHeaders: true, legacyHeaders: false }));
-app.get('/api/health', (_req, res) => res.json({ status: 'ok', service: 'nexus-api', timestamp: new Date().toISOString() }));
+
+app.get('/api/health', (_req, res) => {
+  res.json({
+    status: 'ok',
+    service: 'nexus-api',
+    timestamp: new Date().toISOString()
+  });
+});
+
+app.use(async (_req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    console.error('MongoDB connection failed:', error);
+    res.status(503).json({ error: 'Database unavailable' });
+  }
+});
+
 app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter);
 app.use('/api/resources', resourcesRouter);
