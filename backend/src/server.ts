@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import * as helmet from "helmet";
+import helmet from "helmet";
 import { rateLimit } from "express-rate-limit";
 import mongoose from 'mongoose';
 import { config } from './config.js';
@@ -11,7 +11,7 @@ import { analyticsRouter } from './routes/analytics.js';
 
 const app = express();
 app.disable('x-powered-by');
-app.use(helmet.default());
+app.use(helmet());
 app.use(cors({ origin: config.clientOrigin, credentials: true }));
 app.use(express.json({ limit: '1mb' }));
 app.use('/api/auth', rateLimit({ windowMs: 15 * 60 * 1000, limit: 30, standardHeaders: true, legacyHeaders: false }));
@@ -27,9 +27,4 @@ app.use((err: unknown, _req: express.Request, res: express.Response, _next: expr
   res.status(500).json({ error: message });
 });
 
-mongoose.connect(config.mongoUri).then(() => {
-  app.listen(config.port, () => console.log(`NEXUS API listening on http://localhost:${config.port}`));
-}).catch(error => {
-  console.error('Could not connect to MongoDB:', error);
-  process.exit(1);
-});
+export default app;
