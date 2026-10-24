@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import helmet from "helmet";
+import * as helmet from "helmet";
 import { rateLimit } from "express-rate-limit";
 import mongoose from 'mongoose';
 import { config } from './config.js';
@@ -11,7 +11,7 @@ import { analyticsRouter } from './routes/analytics.js';
 
 const app = express();
 app.disable('x-powered-by');
-app.use(helmet());
+app.use(helmet.default());
 app.use(cors({ origin: config.clientOrigin, credentials: true }));
 app.use(express.json({ limit: '1mb' }));
 app.use('/api/auth', rateLimit({ windowMs: 15 * 60 * 1000, limit: 30, standardHeaders: true, legacyHeaders: false }));
